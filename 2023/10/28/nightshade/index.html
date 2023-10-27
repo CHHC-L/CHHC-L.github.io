@@ -1,0 +1,294 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>Nightshade | CHHC.blog</title><meta name="author" content="CHHC"><meta name="copyright" content="CHHC"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="tl;dr 就论文本身而言Nightshade数据不错，思路接着搞下去也许可以有一定效果；但没什么技术，写的有点蠢，其与前作glaze同样的问题是适用范围有限且anti的措施仍然简单，”通过主动在图片中添加干扰 在不过分影响人类观感的前提下 污染图生成模型的训练” 仍然是一个困难的工作。  0好久没在这写东西了。找的一个不写东西的理由是vmware加上带gui的ubuntu实在是太笨重了以至于懒得">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nightshade">
+<meta property="og:url" content="http://example.com/2023/10/28/nightshade/index.html">
+<meta property="og:site_name" content="CHHC.blog">
+<meta property="og:description" content="tl;dr 就论文本身而言Nightshade数据不错，思路接着搞下去也许可以有一定效果；但没什么技术，写的有点蠢，其与前作glaze同样的问题是适用范围有限且anti的措施仍然简单，”通过主动在图片中添加干扰 在不过分影响人类观感的前提下 污染图生成模型的训练” 仍然是一个困难的工作。  0好久没在这写东西了。找的一个不写东西的理由是vmware加上带gui的ubuntu实在是太笨重了以至于懒得">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/img/default_cover.png">
+<meta property="article:published_time" content="2023-10-27T20:12:06.000Z">
+<meta property="article:modified_time" content="2023-10-27T21:18:14.027Z">
+<meta property="article:author" content="CHHC">
+<meta property="article:tag" content="dev">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/default_cover.png"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="http://example.com/2023/10/28/nightshade/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Nightshade',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-28 05:18:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/favicon.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/default_cover.png')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CHHC.blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Nightshade</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-27T20:12:06.000Z" title="发表于 2023-10-28 04:12:06">2023-10-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-27T21:18:14.027Z" title="更新于 2023-10-28 05:18:14">2023-10-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/dev/">dev</a></span></div><div class="meta-secondline"></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>tl;dr 就论文本身而言Nightshade数据不错，思路接着搞下去也许可以有一定效果；但没什么技术，写的有点蠢，其与前作glaze同样的问题是适用范围有限且anti的措施仍然简单，”通过主动在图片中添加干扰 在不过分影响人类观感的前提下 污染图生成模型的训练” 仍然是一个困难的工作。</p>
+<hr>
+<h1 id="0"><a href="#0" class="headerlink" title="0"></a>0</h1><p>好久没在这写东西了。找的一个不写东西的理由是vmware加上带gui的ubuntu实在是太笨重了以至于懒得打开，写东西的理由则是某人生气了所以不睡了，以及把环境迁移到了wsl+fedora。</p>
+<p>在空间看到画师朋友们都在转Nightshade相关，说能够通过构造少量毒数据来污染大范围的数据集，挺猛。大概因为是新发布的，除了微博上的截图以及一些搬运以外没搜到什么有效信息，稍微好一点的是<a target="_blank" rel="noopener" href="https://www.technologyreview.com/2023/10/23/1082189/data-poisoning-artists-fight-generative-ai/">这篇</a>，但是也没讲到它的核心trick，还得回去看论文（闭目）。论文链接<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2310.13828">这个&#x3D; &#x3D;</a>。Prompt-Specific Poisoning Attacks on Text-to-Image Generative Models，作者大概是SAND Lab, Department of Computer Science, University of Chicago的phd，<a target="_blank" rel="noopener" href="https://sandlab.cs.uchicago.edu/">他们</a>确实主要方向之一是对抗学习。当时glaze火了一阵子，这次应该是同一批人接着做下去了。</p>
+<p>看到摘要的第一眼说实话想跑路。</p>
+<blockquote>
+<p>We observe that training data per concept can be quite limited in these models, making them vulnerable to prompt-specific poisoning attacks, which target a model’s ability to respond to individual prompts.</p>
+</blockquote>
+<p>看来作者主要想做的还是针对特定的标签去做prompt-specific attack，好像还是glaze的差不多思路，没有对当时glaze最大的问题即对img2img几乎没有效果这一点进行针对性的优化（当然这个其实在论文里没怎么强调，论文还是针对纯text2img去做的，数据也不错，后来有人吹太猛了就都在吵img2img…作者本身感觉也有点想恰这波流量，论文之外的描述都挺模糊）。</p>
+<p>Glaze当时是提了一句说对于图像的简单处理不会破坏它的效果，但部分测试认为论文效果过于苛刻，实际上套滤镜或者叠一些影响人类观感的操作之后图像操作的trick就已经不够有用了，而仅基于text2img的污染有意义但还需要加强（因为还是不太容易提高经污染后图片对整个大数据集的影响，而目标太小的训练本来就有印度女工过程也不那么依赖上下文给的text）。另一个对类似想法的简单anti是拿到图片之后先换分辨率然后跑跑重采样、超分辨率之类的，这样对图像本身的污染看起来就没啥作用了。当然对于数据集挨个跑img2img很容易耗费大量算力，如果图片污染能做到在train之前”不得不套一层很深度的img2img”也算一种阶段性成功了。</p>
+<h1 id="论文"><a href="#论文" class="headerlink" title="论文"></a>论文</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>照着大概意思说说吧，Motivation是探究毒数据攻击现有text2img模型的效果，通过对特定prompt引入毒数据去污染数据集，不需要在模型的train之后动手脚，需要的毒数据样本很小。帅。</p>
+<blockquote>
+<p>Specifically, we show that successful poisoning attacks do not need access to the image generation pipeline, nor do they need poison samples comparable in size to the model training dataset. They need only to be comparable to benign training data related to a specific targeted prompt. Generative diffusion models support tens of thousands of prompts. The large majority of these have few training samples associated with them (i.e., low training data “density”), making them easy to poison with relatively few poison samples.</p>
+</blockquote>
+<p>这后边就有一点点寄了，指明它这个”很小”的读数据是相比整体的训练数据集来说的，但仍然需要和关于这个特定prompt处于可比较的大小。攻击的点是说，现在的很多模型数据集很大但是信息密度很低（意思是，一张图片可能对应的关键词很局限，这样我污染这个关键词所需要对抗的数据集就小了很多）。确实是很多模型的缺陷，或者说是数据收集阶段的缺陷，针对这个攻击是好思路。</p>
+<p>举例，我需要污染”钴蓝箭毒蛙”这个prompt（或者说concept），即目标是：只输入”钴蓝箭毒蛙”，期望通过text2img获得的图片并不能表现出钴蓝箭毒蛙的特征；而我产生的毒数据需要让人类视觉上仍然一切正常。在这个场景下，如果生成的毒数据集的大小能够和总体的带”钴蓝箭毒蛙”的数据集大小的数量级接近，那么使用这篇文章的方法是有效的。</p>
+<p>按照这个说法，看似实际应用场景其实已经很狭窄了。因为从防御性质上，需要对这个prompt下面相当比例的内容进行污染处理，号召个人去处理的话花费的精力还是相当大的，而每一个试图窃取这个tag的风格的人所需要做的最多也不过是把抓到的图套一层img2img。仍然是防御成本远大于攻击成本的事情。当然，思路还是好的。<strong>方向上应该可以期望做到让这个毒数据对人类几乎完全不可见，然后如果平台能把毒数据变成默认设置（比如你上传图片的时候就像加水印一样加个污染步骤），就相当于攻击者要去跟平台算力做对抗，确实能产生一部分的限制效果。</strong></p>
+<blockquote>
+<p>First and foremost, we examine training density of single-word prompts (or concepts) in existing large-scale datasets…</p>
+</blockquote>
+<p>Ok, 指出现在的大数据集具有”词稀疏性”以及”语义稀疏性”。前者说的是就算你的总体数据集很大，每个特定prompt的数据集还是很小的；后者说语义相关的数据也很少。所以毒数据集的大小只需要跟特定prompt的数据集去比较。</p>
+<blockquote>
+<p>Next, we propose a significantly optimized prompt-specific poisoning attack we call Nightshade…</p>
+</blockquote>
+<p>说Nightshade的好处，一是人眼难以察觉毒数据，二是它毒数据的效果不错，三是说它的毒数据可以在相近concept之间都产生效果，四是说如果一张图片被标了多个concept训练那它会对这些都产生影响（甚至进而影响总体数据集）。这个第四点实际上是最重要的，如果能更轻松的影响整个数据集，那就能显著降低防御成本以及增加攻击成本，想偷其他concept的人也得想着他抓来的数据是不是被污染过。</p>
+<blockquote>
+<p>Finally, we assert that Nightshade can provide a powerful tool for content owners to protect their intellectual property against model trainers that …</p>
+</blockquote>
+<p>应用。</p>
+<h2 id="Background-and-Related-Work"><a href="#Background-and-Related-Work" class="headerlink" title="Background and Related Work"></a>Background and Related Work</h2><p>复读了text2img的模型训练，然后提了一句因为大模型基本上都是持续的增量训练的，所以产生新的毒数据也能以前发布的模型产生一定效果。</p>
+<p>提了其他攻击方法，略。提了前作glaze的抵抗风格模仿，还有尝试加NSFW，尝试基于其他的特定模型的一些backdoor的攻击。然后说Nightshade因为不对模型内部做假设所以这一步通用性很强。</p>
+<h2 id="Feasibility"><a href="#Feasibility" class="headerlink" title="Feasibility"></a>Feasibility</h2><p>更formal的说了一下假设：</p>
+<blockquote>
+<p>Assume the attacker:</p>
+<ul>
+<li>can inject a small number of poison data (image&#x2F;text pairs) to the model’s training dataset</li>
+<li>can arbitrarily modify the image and text content for all poison data (later we relax this assumption in part 6 to buildadvanced attacks)</li>
+<li>has no access to any other part of the model pipeline (e.g.,training, deployment)</li>
+<li>has access to an open-source text-to-image model (e.g., stable diffusion).</li>
+</ul>
+</blockquote>
+<p>然后说攻击从头训练的模型或者增量训练的模型都会测试。</p>
+<p>然后尝试说明”Concept Sparsity in Today’s Datasets”，现在的数据集的词稀疏性和语义稀疏性。指出这个是现在的模型的Vulnerability，可以被利用来做攻击。</p>
+<p>做一个简单的污染text label的攻击测试：</p>
+<blockquote>
+<p>The key to the attack is the curation of the mismatched text&#x2F;image pairs.</p>
+</blockquote>
+<p>选一个攻击目标label C，选一个不相干的概念A作为误导方向，然后把”用C生成的text”和”与A关联的图片”搁一起当污染数据。最后得到了还行的结果……但是又绕回glaze那一套”风格”了。</p>
+<blockquote>
+<p>We also observe that the simple poisoning attack is more effective at corrupting style concepts than object concepts. This is likely because styles are typically conveyed visually by the entire image, while objects define specific regions within the image.</p>
+</blockquote>
+<h2 id="Nightshade"><a href="#Nightshade" class="headerlink" title="Nightshade"></a>Nightshade</h2><p>设计目标”poison success with fewer poison samples”, “avoid human and automated detection”。</p>
+<p>然后应该终于到它的核心trick了：</p>
+<p>首先为了最大化一组毒数据的效果：</p>
+<blockquote>
+<p>First, each poison text prompt clearly and succinctly conveys the keyword C, allowing the poison data to exclusively target the model parameters associated with C. Second, each poison image clearly and succinctly portrays a concept A that is unrelated to C. The irrelevancy between C and A ensures that, when paired with the poison text prompts conveying C, the poison images will produce the gradient updates pointing to a distinct direction (defined by A) away from those of the clean data (defined by C).</p>
+</blockquote>
+<p>废话。找尽量无关的图片和文本去污染，这样就能让模型的梯度更新方向和正常的数据集的梯度更新方向尽量不一样。</p>
+<p>提了一句它的毒数据不是往已有里面加毒，而是text2img的query产生图片去替换原来的数据。</p>
+<p>然后应该最重要的”Constructing Clean-label Poison Data”，也就是试图防止上面生成的数据直接被洗掉。进行”guided perturbation”有引导地去加扰动。之前产生的pair里面的图片被称作”anchor image”，对于每一个anchor image，找到它的text prompt，然后对这个prompt进行扰动，用LPIPS去衡量扰动的大小，再用某种penalty method去解这个优化问题。Eq. (1)是定义了一下两张图片之间的距离。</p>
+<blockquote>
+<p>Step 3: Constructing poison images $\left{\right.$Image$\left._p\right}$.</p>
+<p>For each text prompt $t \in\left{\right.$Text$\left.<em>{p}\right}$, locate its natural image pair $x_t$ in ${$Image$}$. Choose an anchor image $x^a$ from $\left{\right.$Image$\left.</em>{\text{anchor}}\right}$. Given $x_t$ and $x^a$, run the optimization of eq. (1) to produce a perturbed version $x_t^{\prime}&#x3D;x_t+\delta$, subject to $|\delta|&lt;p$. Like [19], we use LPIPS [96] to bound the perturbation and apply the penalty method [46] to solve the optimization:<br>$$<br>\min <em>\delta\left|F\left(x_t+\delta\right)-F\left(x^a\right)\right|<em>2^2+\alpha \cdot \max (\operatorname{LPIPS}(\boldsymbol{\delta})-p, 0) .<br>$$<br>Next, add the text&#x2F;image pair $t &#x2F; x_t^{\prime}$ into the poison dataset $\left{\right.$Text$</em>{p} &#x2F;$Image$\left.</em>{p}\right}$, remove $x^a$ from the anchor set, and move to the next text prompt in $\left{\operatorname{Text}_p\right}$.</p>
+</blockquote>
+<p>我为什么放这一段呢，因为我看到这觉得我他妈是个傻子。这他妈算个锤子的trick………套了个东西算一下目标和当前set的距离，每次走一步试试，最后弄个差不多的完事。梯度下降。没了。</p>
+<p>然后直接上Evaluation了，ok，您吉祥。</p>
+<h2 id="Evaluation"><a href="#Evaluation" class="headerlink" title="Evaluation"></a>Evaluation</h2><p>篇幅很长，很不想看。几个数据集，几个baseline，几个任务和目标，完成得很好！反正我复现不了，就当它是真的吧。</p>
+<blockquote>
+<ul>
+<li><p>Succeed with little poison data.</p>
+</li>
+<li><p>Bleed-through to nearby&#x2F;related concepts.</p>
+</li>
+<li><p>Poison attacks are composable. Multiple attacks damage the entire model.</p>
+</li>
+<li><p>Attack transferability to different models. on diverse prompts.</p>
+</li>
+</ul>
+</blockquote>
+<p>您吉祥。</p>
+<h2 id="Potential-Defenses"><a href="#Potential-Defenses" class="headerlink" title="Potential Defenses"></a>Potential Defenses</h2><p>分析了几条可能的防御措施，看起来还挺真的，确实也是这篇文章本来想要应对的任务。通过梯度下降的洗一洗，确实能使得毒数据在一些表现上不容易被察觉，loss、frequency看起来差不多。</p>
+<p>然后alignment score说直接污染label的话表现很不好……当然，不然alignment是干啥的（闭目）后半句说Nightshade好一些，alignment filtering只能筛出63% precision and 47% recall with 10% FPR，这样筛完之后还是有数量级接近的毒数据，所以还是有一定的效果的。但如果针对性的去搞一下alignment，可能毒数据还是不太容易逃过去，毕竟这个trick本身就是针对text2img搞的，”从头生成image”的任务与”将已有的image和text对齐”的任务还是差别挺大的。但这个也说得过去，还是如果能够在平台上加入这个污染步骤，毒数据的数量级足够大，那太自动的alignment就没那么好使了，要么重新再来一轮印度女工。</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>最后两段总结了一下，然后说了一点版权保护什么的，还好没水太多废话了。</p>
+<h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><p>看完了，感觉论文没啥意思，甚至不如glaze，核心trick实在是太简单了。应用场景暂时很有限的，但是思路是好的，继续往下做如果能获得内容平台的支持的话确实是一个不错的防御手段，之后也就当作大号水印了。</p>
+<p>至于版权保护什么的……谨慎不看好，毕竟怎么搞也不是很难被anti，只是成本高一点而已。我的直觉上仍然是如果人眼没法显著的区分，那经过适当处理（从最简单的平滑、滤镜，到暴力的重新采样，压像素再超分辨回去……）之后也就没什么效果了，这个任务的难度还是太大了。</p>
+<p>此外对于小的目标来说这也没啥意义，毕竟我如果炼LoRA的话首先会有很多不依赖画师再创作的素材，等于说是可以和画师从同一个层面开始学习（比如炼炼番剧里出现的角色，那也不怎么需要偷画师的风格了），然后稍微抽象一点的话那画师的素材也少&#x2F;自由度更高，一些太细节的决定性特征现在也要手动去微调，数据污染不污染好像也作用不大了。</p>
+<p>总之首先谴责水且没法复现的论文……Glaze至少给了个能用的demo。虽然也有点楽，但在论文里宣称的东西还算是实现得不错。这篇看起来倒是也没什么造假，数据也没太离谱，就只是有一种不知道为什么要发成两篇的感觉。时隔半年拉出来再炒一波倒也没什么能说的了（笑</p>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/dev/">dev</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/01/01/2022/"><img class="next-cover" src="/img/default_cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">2022</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CHHC</div><div class="author-info__description"></div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CHHC-L"><i class="fab fa-github"></i><span>Github</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0"><span class="toc-number">1.</span> <span class="toc-text">0</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87"><span class="toc-number">2.</span> <span class="toc-text">论文</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">2.1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Background-and-Related-Work"><span class="toc-number">2.2.</span> <span class="toc-text">Background and Related Work</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feasibility"><span class="toc-number">2.3.</span> <span class="toc-text">Feasibility</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nightshade"><span class="toc-number">2.4.</span> <span class="toc-text">Nightshade</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Evaluation"><span class="toc-number">2.5.</span> <span class="toc-text">Evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Potential-Defenses"><span class="toc-number">2.6.</span> <span class="toc-text">Potential Defenses</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">2.7.</span> <span class="toc-text">Conclusion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1"><span class="toc-number">3.</span> <span class="toc-text">1</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background: #1f1e33"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By CHHC</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container').forEach(node => {
+            if (node.hasAttribute('display')) {
+              btf.wrap(node, 'div', { class: 'mathjax-overflow' })
+            } else {
+              btf.wrap(node, 'span', { class: 'mathjax-overflow' })
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div></div></body></html>
