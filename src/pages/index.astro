@@ -11,5 +11,19 @@ const posts = (await getPosts()).filter((post) => !isArchived(post));
     <h1>咸鱼烧。</h1>
     <p>这个 blog 大概是用来玩的。</p>
   </div>
-  <YearIndex posts={posts} />
+  {
+    posts.length > 0 ? (
+      <YearIndex posts={posts} />
+    ) : (
+      <p class="empty column">
+        还没有新文章。以前写的都在 <a href="/archive/">Archive</a> 里。
+      </p>
+    )
+  }
 </Base>
+
+<style>
+  .empty {
+    color: var(--muted);
+  }
+</style>
