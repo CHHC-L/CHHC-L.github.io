@@ -9,7 +9,13 @@ const posts = (await getPosts()).filter(isArchived);
 <Base title="Archive">
   <div class="lede">
     <h1>Archive</h1>
-    <p>{posts.length > 0 ? `${posts.length} 篇不再放在首页的旧文章。` : '暂时没有存档的文章。'}</p>
+    <p>存档</p>
   </div>
-  <YearIndex posts={posts} />
+  {posts.length > 0 ? <YearIndex posts={posts} /> : <p class="empty column">暂时没有存档的文章。</p>}
 </Base>
+
+<style>
+  .empty {
+    color: var(--muted);
+  }
+</style>

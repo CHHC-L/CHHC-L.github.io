@@ -1,29 +1,35 @@
 ---
 import Base from '../layouts/Base.astro';
 import YearIndex from '../components/YearIndex.astro';
+import { SITE_TITLE } from '../consts';
 import { getPosts, isArchived } from '../lib/posts';
 
 const posts = (await getPosts()).filter((post) => !isArchived(post));
 ---
 
 <Base>
-  <div class="lede">
-    <h1>咸鱼烧。</h1>
-    <p>这个 blog 大概是用来玩的。</p>
+  <!-- Intro goes here: swap this heading for a visible <div class="lede"> with an <h1> and a <p>. -->
+  <h1 class="visually-hidden">{SITE_TITLE}</h1>
+  <div class="timeline">
+    {
+      posts.length > 0 ? (
+        <YearIndex posts={posts} />
+      ) : (
+        <p class="empty column">
+          还没有新文章。以前写的都在 <a href="/archive/">Archive</a> 里。
+        </p>
+      )
+    }
   </div>
-  {
-    posts.length > 0 ? (
-      <YearIndex posts={posts} />
-    ) : (
-      <p class="empty column">
-        还没有新文章。以前写的都在 <a href="/archive/">Archive</a> 里。
-      </p>
-    )
-  }
 </Base>
 
 <style>
+  .timeline {
+    margin-top: 2.5rem;
+  }
+
   .empty {
+    margin-top: 0;
     color: var(--muted);
   }
 </style>
