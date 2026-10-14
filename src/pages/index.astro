@@ -16,7 +16,7 @@ const posts = (await getPosts()).filter((post) => !isArchived(post));
         <YearIndex posts={posts} />
       ) : (
         <p class="empty column">
-          还没有新文章。以前写的都在 <a href="/archive/">Archive</a> 里。
+          No new posts yet. Older ones are in the <a href="/archive/">Archive</a>.
         </p>
       )
     }
