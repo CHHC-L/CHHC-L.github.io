@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import { EMAIL, GITHUB } from '../consts';
 
+const rss = new URL('/rss.xml', Astro.site);
+
 // Newest first.
 const experience = [
   { dates: 'Sep 2026 – Present', place: 'Non-convex Tech', role: 'Quantitative Developer' },
@@ -43,7 +45,11 @@ const experience = [
         </div>
         <div>
           <dt>GitHub</dt>
-          <dd><a href={GITHUB}>{GITHUB.replace('https://', '')}</a></dd>
+          <dd><a href={GITHUB}>{GITHUB.split('/').pop()}</a></dd>
+        </div>
+        <div>
+          <dt>RSS</dt>
+          <dd><a href="/rss.xml">{rss.host + rss.pathname}</a></dd>
         </div>
       </dl>
     </section>
