@@ -29,6 +29,16 @@ $$
 
 图片放在 `public/images/` 下，用 `![说明](/images/xxx.png)` 引用。
 
+### 存档
+
+给文章的 `tags` 加上 `archived`，它就不再出现在首页时间线和 RSS 里，改为列在 `/archive/`（右上角 Archive）：
+
+```yaml
+tags: ["dev", "archived"]
+```
+
+`archived` 不会作为标签显示，文章页会标一个“已存档”。文章在它别的标签页（如 `/tags/dev/`）里照常出现。去掉这个标签就回到首页。标签名在 `src/consts.ts` 的 `ARCHIVED_TAG` 里改。
+
 ## 本地预览
 
 需要 Node.js 22.12 以上。
@@ -54,7 +64,7 @@ git add -A && git commit -m "新文章：xxx" && git push
 
 ```
 src/content/posts/   文章
-src/pages/           页面：首页、文章页、标签、关于、RSS、404
+src/pages/           页面：首页、文章页、存档、标签、关于、RSS、404
 src/layouts/         页面骨架（页头页脚、<head>）
 src/styles/global.css 全部样式；配色在开头的 :root 里
 src/consts.ts        站名、简介、邮箱、GitHub、日期显示用的时区

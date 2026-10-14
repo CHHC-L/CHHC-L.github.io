@@ -1,6 +1,6 @@
 ---
 import TagList from './TagList.astro';
-import { formatDate, formatMonthDay, groupByYear, postUrl, type Post } from '../lib/posts';
+import { formatDate, formatMonthDay, groupByYear, postUrl, topicTags, type Post } from '../lib/posts';
 
 interface Props {
   posts: Post[];
@@ -21,7 +21,7 @@ const groups = groupByYear(Astro.props.posts);
               <a class="title" href={postUrl(post)}>
                 {post.data.title}
               </a>
-              <TagList tags={post.data.tags} />
+              <TagList tags={topicTags(post)} />
             </div>
           </li>
         ))}

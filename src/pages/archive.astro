@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import YearIndex from '../components/YearIndex.astro';
+import { getPosts, isArchived } from '../lib/posts';
+
+const posts = (await getPosts()).filter(isArchived);
+---
+
+<Base title="Archive">
+  <div class="lede">
+    <h1>Archive</h1>
+    <p>{posts.length > 0 ? `${posts.length} 篇不再放在首页的旧文章。` : '暂时没有存档的文章。'}</p>
+  </div>
+  <YearIndex posts={posts} />
+</Base>

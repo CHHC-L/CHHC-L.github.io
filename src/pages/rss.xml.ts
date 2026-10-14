@@ -1,10 +1,11 @@
 import rss from '@astrojs/rss';
 import type { APIContext } from 'astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
-import { excerpt, getPosts, postUrl } from '../lib/posts';
+import { excerpt, getPosts, isArchived, postUrl, topicTags } from '../lib/posts';
 
 export async function GET(context: APIContext) {
-  const posts = await getPosts();
+  // The feed follows the home timeline: archived posts stay out.
+  const posts = (await getPosts()).filter((post) => !isArchived(post));
   return rss({
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
@@ -14,7 +15,7 @@ export async function GET(context: APIContext) {
       pubDate: post.data.date,
       description: excerpt(post, 200),
       link: postUrl(post),
-      categories: post.data.tags,
+      categories: topicTags(post),
     })),
     customData: '<language>zh-CN</language>',
   });

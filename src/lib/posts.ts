@@ -1,13 +1,18 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { TIME_ZONE } from '../consts';
+import { ARCHIVED_TAG, TIME_ZONE } from '../consts';
 
 export type Post = CollectionEntry<'posts'>;
 
-/** Published posts, newest first. Drafts show up only in `npm run dev`. */
+/** Published posts, archived ones included, newest first. Drafts show up only in `npm run dev`. */
 export async function getPosts(): Promise<Post[]> {
   const posts = await getCollection('posts', ({ data }) => import.meta.env.DEV || !data.draft);
   return posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 }
+
+export const isArchived = (post: Post) => post.data.tags.includes(ARCHIVED_TAG);
+
+/** The post's tags minus the archived marker, which is a status rather than a topic. */
+export const topicTags = (post: Post) => post.data.tags.filter((tag) => tag !== ARCHIVED_TAG);
 
 const dateParts = new Intl.DateTimeFormat('en-CA', {
   timeZone: TIME_ZONE,

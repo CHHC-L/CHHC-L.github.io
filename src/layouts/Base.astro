@@ -15,8 +15,9 @@ const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const path = Astro.url.pathname;
 const nav = [
-  { href: '/tags/', label: '标签' },
-  { href: '/about/', label: '关于' },
+  { href: '/archive/', label: 'Archive' },
+  { href: '/tags/', label: 'Tags' },
+  { href: '/about/', label: 'About' },
 ];
 ---
 

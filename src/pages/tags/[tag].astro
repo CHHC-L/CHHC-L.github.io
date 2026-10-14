@@ -1,14 +1,14 @@
 ---
 import Base from '../../layouts/Base.astro';
 import YearIndex from '../../components/YearIndex.astro';
-import { getPosts, type Post } from '../../lib/posts';
+import { getPosts, topicTags, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
-  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+  const tags = [...new Set(posts.flatMap(topicTags))];
   return tags.map((tag) => ({
     params: { tag },
-    props: { posts: posts.filter((post) => post.data.tags.includes(tag)) },
+    props: { posts: posts.filter((post) => topicTags(post).includes(tag)) },
   }));
 }
 
