@@ -1,0 +1,73 @@
+---
+import '@fontsource/noto-serif-sc/400.css';
+import '@fontsource/noto-serif-sc/700.css';
+import '@fontsource/noto-serif-sc/900.css';
+import '../styles/global.css';
+import { AUTHOR, EMAIL, GITHUB, SINCE, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE_DESCRIPTION } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE_TITLE}` : SITE_TITLE;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const path = Astro.url.pathname;
+const nav = [
+  { href: '/tags/', label: '标签' },
+  { href: '/about/', label: '关于' },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={AUTHOR} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content={title ?? SITE_TITLE} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:image" content={new URL('/avatar.jpg', Astro.site)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">跳到正文</a>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label={`${SITE_TITLE} 首页`}>
+        <img src="/avatar.jpg" alt="" width="36" height="36" />
+        <span>{SITE_TITLE}</span>
+      </a>
+      <nav aria-label="站点">
+        {
+          nav.map(({ href, label }) => (
+            <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>
+              {label}
+            </a>
+          ))
+        }
+        <a href="/rss.xml">RSS</a>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>© {SINCE}–{new Date().getFullYear()} {AUTHOR}</p>
+      <p>
+        <a href={GITHUB}>GitHub</a>
+        <a href={`mailto:${EMAIL}`}>Email</a>
+        <a href="/rss.xml">RSS</a>
+      </p>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import YearIndex from '../components/YearIndex.astro';
+import { getPosts } from '../lib/posts';
+
+const posts = await getPosts();
+---
+
+<Base>
+  <div class="lede">
+    <h1>咸鱼烧。</h1>
+    <p>这个 blog 大概是用来玩的。</p>
+  </div>
+  <YearIndex posts={posts} />
+</Base>

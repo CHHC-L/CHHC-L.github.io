@@ -1,0 +1,31 @@
+---
+import TagList from './TagList.astro';
+import { formatDate, formatMonthDay, groupByYear, postUrl, type Post } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+}
+
+const groups = groupByYear(Astro.props.posts);
+---
+
+{
+  groups.map(([year, posts]) => (
+    <section class="year-group" aria-labelledby={`y${year}`}>
+      <h2 id={`y${year}`}>{year}</h2>
+      <ul class="post-list">
+        {posts.map((post) => (
+          <li>
+            <time datetime={formatDate(post.data.date)}>{formatMonthDay(post.data.date)}</time>
+            <div>
+              <a class="title" href={postUrl(post)}>
+                {post.data.title}
+              </a>
+              <TagList tags={post.data.tags} />
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))
+}

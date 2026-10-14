@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { EMAIL, GITHUB } from '../consts';
+---
+
+<Base title="关于">
+  <article class="column">
+    <header class="post-header">
+      <h1>关于</h1>
+    </header>
+    <div class="prose">
+      <p>“咸鱼烧”。</p>
+      <p>这个 blog 大概是用来玩的。</p>
+      <p>Email：<a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+      <p>GitHub：<a href={GITHUB}>{GITHUB.replace('https://', '')}</a></p>
+    </div>
+  </article>
+</Base>
