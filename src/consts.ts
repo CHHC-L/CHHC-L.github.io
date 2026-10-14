@@ -1,5 +1,5 @@
 export const SITE_TITLE = 'CHHC.blog';
-export const SITE_DESCRIPTION = 'CHHC 的个人博客。';
+export const SITE_DESCRIPTION = "CHHC's blog.";
 export const AUTHOR = 'CHHC';
 export const EMAIL = 'jtq@umich.edu';
 export const GITHUB = 'https://github.com/CHHC-L';

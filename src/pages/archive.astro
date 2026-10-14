@@ -11,7 +11,7 @@ const posts = (await getPosts()).filter(isArchived);
     <h1>Archive</h1>
     <p>存档</p>
   </div>
-  {posts.length > 0 ? <YearIndex posts={posts} /> : <p class="empty column">暂时没有存档的文章。</p>}
+  {posts.length > 0 ? <YearIndex posts={posts} /> : <p class="empty column">Nothing archived yet.</p>}
 </Base>
 
 <style>

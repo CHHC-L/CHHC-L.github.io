@@ -22,7 +22,7 @@ const nav = [
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,13 +42,13 @@ const nav = [
     <slot name="head" />
   </head>
   <body>
-    <a class="skip" href="#main">跳到正文</a>
+    <a class="skip" href="#main">Skip to content</a>
     <header class="site-header">
-      <a class="brand" href="/" aria-label={`${SITE_TITLE} 首页`}>
+      <a class="brand" href="/" aria-label={`${SITE_TITLE} home`}>
         <img src="/avatar.jpg" alt="" width="36" height="36" />
         <span>{SITE_TITLE}</span>
       </a>
-      <nav aria-label="站点">
+      <nav aria-label="Site">
         {
           nav.map(({ href, label }) => (
             <a href={href} aria-current={path.startsWith(href) ? 'page' : undefined}>

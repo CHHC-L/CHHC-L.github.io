@@ -9,6 +9,8 @@ const posts = defineCollection({
     date: z.coerce.date(),
     updated: z.coerce.date().optional(),
     tags: z.array(z.string()).default([]),
+    // Set for posts not written in English, e.g. zh-CN.
+    lang: z.string().optional(),
     description: z.string().optional(),
     draft: z.boolean().default(false),
   }),

@@ -16,7 +16,7 @@ const posts = (await getPosts()).filter((post) => !isArchived(post));
         <YearIndex posts={posts} />
       ) : (
         <p class="empty column">
-          No new posts yet. Older ones are in the <a href="/archive/">Archive</a>.
+          No new posts yet.
         </p>
       )
     }

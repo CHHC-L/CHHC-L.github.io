@@ -2,7 +2,8 @@
 title: "About VG100"
 date: 2023-10-29T15:30:23+08:00
 updated: 2023-10-29T16:01:47+08:00
-tags: ["杂谈", "Learning", "archived"]
+tags: ["musings", "courses", "archived"]
+lang: zh-CN
 ---
 
 只是改一下上个学期vg100结课之后写在备忘录的东西。

@@ -3,6 +3,7 @@ title: "此站点的搭建"
 date: 2022-12-18T04:27:12+08:00
 updated: 2022-12-18T04:56:01+08:00
 tags: ["dev", "archived"]
+lang: zh-CN
 ---
 
 ## 配置

@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import YearIndex from '../../components/YearIndex.astro';
-import { getPosts, topicTags, type Post } from '../../lib/posts';
+import { getPosts, postCount, topicTags, type Post } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -23,7 +23,7 @@ const { posts } = Astro.props;
 <Base title={`#${tag}`}>
   <div class="lede">
     <h1>#{tag}</h1>
-    <p>{posts.length} 篇文章。<a href="/tags/">全部标签</a></p>
+    <p>{postCount(posts.length)}. <a href="/tags/">All tags</a></p>
   </div>
   <YearIndex posts={posts} />
 </Base>

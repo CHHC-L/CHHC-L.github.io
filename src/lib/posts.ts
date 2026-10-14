@@ -39,6 +39,9 @@ export function groupByYear(posts: Post[]): [string, Post[]][] {
   return [...groups];
 }
 
+/** 1 post, 3 posts */
+export const postCount = (n: number) => `${n} ${n === 1 ? 'post' : 'posts'}`;
+
 export const postUrl = (post: Post) => `/posts/${post.id}/`;
 export const tagUrl = (tag: string) => `/tags/${encodeURIComponent(tag)}/`;
 

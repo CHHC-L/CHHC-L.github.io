@@ -1,80 +1,81 @@
 # CHHC.blog
 
-https://chhc-l.github.io 的源码。用 [Astro](https://astro.build) 生成静态页面，推送到 `main` 后由 GitHub Actions 自动构建并发布到 GitHub Pages。
+Source for https://chhc-l.github.io. Built with [Astro](https://astro.build); every push to `main` is built by GitHub Actions and published to GitHub Pages.
 
-源码和发布都在这个仓库里：`main` 放源码，构建产物不进仓库。（旧的 Hexo 站点只推送了生成好的 HTML，源 markdown 因此丢了；现在不会再这样。）
+`main` holds the source; build output never goes into the repo. (The old Hexo site only ever pushed generated HTML, which is how its markdown got lost.)
 
-## 写文章
+## Writing a post
 
-在 `src/content/posts/` 新建一个 `.md` 文件，文件名就是文章地址：`hello.md` → `/posts/hello/`。
+Add a `.md` file under `src/content/posts/`. The file name is the URL: `hello.md` → `/posts/hello/`.
 
 ```markdown
 ---
-title: "标题"
-date: 2026-10-14T20:00:00+08:00
+title: "Title"
+date: 2026-10-14T20:00:00-04:00
 tags: ["dev"]
-# updated: 2026-10-15T10:00:00+08:00   可选，显示“更新于”
-# description: "一句话简介"              可选，用于 RSS 和搜索结果；不写就截取正文开头
-# draft: true                           可选，草稿只在本地 dev 里出现
+# updated: 2026-10-15T10:00:00-04:00   optional, shows "Updated <date>"
+# description: "One-line summary"       optional, for RSS and search results; defaults to the opening text
+# lang: zh-CN                           optional, for posts not written in English
+# draft: true                           optional, drafts only show up in `npm run dev`
 ---
 
-正文。标题从 `##` 开始，`#` 留给文章标题。
+Body. Section headings start at `##`; `#` is the post title.
 
-行内公式 $x^2$，块公式：
+Inline math $x^2$, display math:
 
 $$
 \int_0^1 f(x)\,dx
 $$
 ```
 
-图片放在 `public/images/` 下，用 `![说明](/images/xxx.png)` 引用。
+Put images in `public/images/` and reference them as `![alt text](/images/name.png)`.
 
-### 存档
+### Archiving
 
-给文章的 `tags` 加上 `archived`，它就不再出现在首页时间线和 RSS 里，改为列在 `/archive/`（右上角 Archive）：
+Add `archived` to a post's `tags` to take it off the home timeline and out of RSS. It's then listed under `/archive/` (Archive in the header):
 
 ```yaml
 tags: ["dev", "archived"]
 ```
 
-`archived` 不会作为标签显示，文章页会标一个“已存档”。文章在它别的标签页（如 `/tags/dev/`）里照常出现。去掉这个标签就回到首页。标签名在 `src/consts.ts` 的 `ARCHIVED_TAG` 里改。
+`archived` is never shown as a tag, and the post page gets an "Archived" marker. The post still appears on its other tag pages (e.g. `/tags/dev/`). Remove the tag to bring it back. The tag name lives in `ARCHIVED_TAG` in `src/consts.ts`.
 
-## 本地预览
+## Local preview
 
-需要 Node.js 22.12 以上。
+Needs Node.js 22.12 or newer.
 
 ```sh
 npm install
-npm run dev        # http://localhost:4321 ，改文件自动刷新
-npm run build      # 生成 dist/
-npm run preview    # 预览 dist/
+npm run dev        # http://localhost:4321, reloads on save
+npm run build      # writes dist/
+npm run preview    # serves dist/
 ```
 
-## 发布
+## Publishing
 
 ```sh
-git add -A && git commit -m "新文章：xxx" && git push
+git add -A && git commit -m "Post: ..." && git push
 ```
 
-推送到 `main` 会触发 `.github/workflows/deploy.yml`，一两分钟后上线。进度在仓库的 Actions 页。
+Pushing to `main` runs `.github/workflows/deploy.yml`; the site updates a minute or two later. Progress is on the repo's Actions tab.
 
-仓库设置里 **Settings → Pages → Source** 必须是 **GitHub Actions**。
+The repo's **Settings → Pages → Source** must be **GitHub Actions**.
 
-## 结构
+## Layout
 
 ```
-src/content/posts/   文章
-src/pages/           页面：首页、文章页、存档、标签、关于、RSS、404
-src/layouts/         页面骨架（页头页脚、<head>）
-src/styles/global.css 全部样式；配色在开头的 :root 里
-src/consts.ts        站名、简介、邮箱、GitHub、日期显示用的时区
-astro.config.mjs     站点地址、Markdown（KaTeX、代码高亮）、旧链接重定向
+src/content/posts/    posts
+src/pages/            home, post pages, archive, tags, about, RSS, 404
+src/layouts/          page shell (header, footer, <head>)
+src/styles/global.css all styles; colors are the :root tokens at the top
+src/consts.ts         site name, description, email, GitHub, archived tag, display time zone
+astro.config.mjs      site URL, Markdown (KaTeX, code highlighting), redirects for old URLs
 ```
 
-## 从 Hexo 迁移过来的东西
+## Migrated from Hexo
 
-- 5 篇旧文章是从旧站生成的 HTML 反向转换回 markdown 的；公式从 KaTeX 的 TeX 注释里还原，代码块语言保留。
-- 旧的分类（dev、Learning）和标签合并成了标签。
-- 旧链接（`/2023/10/28/nightshade/` 这种）、`/archives/`、`/categories/…` 都在 `astro.config.mjs` 的 `redirects` 里跳转到新地址。
-- 《此站点的搭建》里引用的 upload.cc 截图已经失效，换成了文字说明。
-- 旧站的生成结果还留在仓库的 `master` 分支上，可以随时翻。
+- The 5 old posts were converted back to markdown from the old site's generated HTML. Math was recovered from KaTeX's TeX annotations; code block languages were kept. They're marked `lang: zh-CN` and archived.
+- Old categories and tags were merged into tags, then renamed: 杂谈 → `musings`, Learning → `courses`, dev stays `dev`.
+- Old URLs (`/2023/10/28/nightshade/` and the like, `/archives/`, `/categories/…`, `/tags/杂谈/`, `/tags/Learning/`) redirect to their new homes via `redirects` in `astro.config.mjs`.
+- The upload.cc screenshot in 此站点的搭建 no longer exists and was replaced with a note.
+- The old generated site is kept on the `hexo-backup` branch.

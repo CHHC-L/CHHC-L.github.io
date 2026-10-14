@@ -49,30 +49,30 @@ const edited = updated && formatDate(updated);
     <div class="post-year" aria-hidden="true">{published.slice(0, 4)}</div>
     <div>
       <header class="post-header">
-        <h1>{title}</h1>
+        <h1 lang={post.data.lang}>{title}</h1>
         <div class="post-meta">
           <time datetime={date.toISOString()}>{published}</time>
-          {edited && edited !== published && <span>更新于 {edited}</span>}
-          {isArchived(post) && <a href="/archive/">已存档</a>}
+          {edited && edited !== published && <span>Updated {edited}</span>}
+          {isArchived(post) && <a href="/archive/">Archived</a>}
           <TagList tags={topicTags(post)} />
         </div>
       </header>
-      <div class="prose">
+      <div class="prose" lang={post.data.lang}>
         <Content />
       </div>
       {
         (older || newer) && (
-          <nav class="post-nav" aria-label="上一篇和下一篇">
+          <nav class="post-nav" aria-label="Older and newer posts">
             {older && (
               <a class="older" href={postUrl(older)}>
-                <span>上一篇</span>
-                <strong>{older.data.title}</strong>
+                <span>Older</span>
+                <strong lang={older.data.lang}>{older.data.title}</strong>
               </a>
             )}
             {newer && (
               <a class="next" href={postUrl(newer)}>
-                <span>下一篇</span>
-                <strong>{newer.data.title}</strong>
+                <span>Newer</span>
+                <strong lang={newer.data.lang}>{newer.data.title}</strong>
               </a>
             )}
           </nav>

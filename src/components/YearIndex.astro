@@ -18,7 +18,7 @@ const groups = groupByYear(Astro.props.posts);
           <li>
             <time datetime={formatDate(post.data.date)}>{formatMonthDay(post.data.date)}</time>
             <div>
-              <a class="title" href={postUrl(post)}>
+              <a class="title" href={postUrl(post)} lang={post.data.lang}>
                 {post.data.title}
               </a>
               <TagList tags={topicTags(post)} />

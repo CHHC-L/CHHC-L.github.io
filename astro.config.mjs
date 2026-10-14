@@ -18,8 +18,9 @@ export default defineConfig({
       themes: { light: 'github-light', dark: 'tokyo-night' },
     },
   },
-  // Old Hexo permalinks, kept alive so existing links still land somewhere.
+  // Old URLs, kept alive so existing links still land somewhere.
   redirects: {
+    // Hexo permalinks
     '/2022/12/18/site-build-0': '/posts/site-build-0/',
     '/2022/12/27/about-vg151': '/posts/about-vg151/',
     '/2023/01/01/2022': '/posts/2022/',
@@ -28,6 +29,9 @@ export default defineConfig({
     '/archives': '/',
     '/categories': '/tags/',
     '/categories/dev': '/tags/dev/',
-    '/categories/Learning': '/tags/Learning/',
+    '/categories/Learning': '/tags/courses/',
+    // Renamed tags
+    '/tags/杂谈': '/tags/musings/',
+    '/tags/Learning': '/tags/courses/',
   },
 });
