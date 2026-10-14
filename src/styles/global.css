@@ -30,12 +30,12 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #12152a;
+    --bg: #292a35;
     --ink: #dde1f1;
     --muted: #9095b8;
-    --rule: #2b3052;
+    --rule: #41434f;
     --accent: #f0758a;
-    --code-bg: #1b1f38;
+    --code-bg: #20212a;
     --selection: #5a2333;
 
     color-scheme: dark;
