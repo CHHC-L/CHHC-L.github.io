@@ -6,15 +6,14 @@
 }
 
 /*
- * Palette taken from the avatar: snow-lit blue-white, indigo ink,
- * and the crimson of the jacket as the single accent.
+ * Snow-lit blue-white and indigo ink, with one coral accent shared by both schemes.
  */
 :root {
   --bg: #f3f5fa;
   --ink: #1d2242;
   --muted: #62678a;
   --rule: #d6dbea;
-  --accent: #b4233c;
+  --accent: #fa6b6b;
   --code-bg: #e7ebf5;
   --selection: #f3c9d1;
 
@@ -34,7 +33,6 @@
     --ink: #dde1f1;
     --muted: #9095b8;
     --rule: #41434f;
-    --accent: #f0758a;
     --code-bg: #20212a;
     --selection: #5a2333;
 
@@ -127,18 +125,10 @@ main,
 }
 
 .brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
   font-weight: 900;
   font-size: 1.05rem;
   text-decoration: none;
   letter-spacing: 0.01em;
-}
-
-.brand img {
-  border-radius: 50%;
-  display: block;
 }
 
 .site-header nav {
@@ -288,10 +278,12 @@ main {
   text-decoration: underline;
 }
 
-.post-list .title + .tag-list {
-  display: inline-flex;
-  margin-left: 0.9rem;
-  vertical-align: 0.05em;
+/* Title and tags share a line; when the tags wrap they start flush left. */
+.post-list .entry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.9rem;
 }
 
 .tag-list {
