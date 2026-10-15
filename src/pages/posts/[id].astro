@@ -1,5 +1,4 @@
 ---
-import 'katex/dist/katex.min.css';
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import TagList from '../../components/TagList.astro';
@@ -44,6 +43,7 @@ const edited = updated && formatDate(updated);
   <Fragment slot="head">
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content={date.toISOString()} />
+    <link rel="alternate" type="text/markdown" href={`/posts/${post.id}.md`} />
   </Fragment>
   <article class="post">
     <header class="post-header">
@@ -53,6 +53,7 @@ const edited = updated && formatDate(updated);
         {edited && edited !== published && <span>Updated {edited}</span>}
         {isArchived(post) && <a href="/archive/">Archived</a>}
         <TagList tags={topicTags(post)} />
+        <a href={`/posts/${post.id}.md`}>Markdown</a>
       </div>
     </header>
     <div class="prose" lang={post.data.lang}>

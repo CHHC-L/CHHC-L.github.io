@@ -28,7 +28,9 @@ $$
 $$
 ```
 
-Put images in `public/images/` and reference them as `![alt text](/images/name.png)`. An image on its own line is a figure: it spans the year gutter on wide screens, and wrapping it in a link to itself (`[![alt](/images/x.png)](/images/x.png)`) lets readers open the full-size file.
+Put images in `public/images/<post-id>/` as WebP (lossless for charts: `cwebp -lossless` or sharp) and reference them as `![alt text](/images/<post-id>/name.webp)`. An image on its own line becomes a `<figure>` with its width and height filled in and lazy loading; wrapping it in a link to itself (`[![alt](/images/x.webp)](/images/x.webp)`) lets readers open the full-size file.
+
+Math renders as native MathML (no KaTeX CSS or fonts); hovering a formula shows its TeX source.
 
 ### Citations
 
@@ -81,12 +83,18 @@ The repo's **Settings → Pages → Source** must be **GitHub Actions**.
 
 ```
 src/content/posts/    posts
-src/pages/            home, post pages, archive, tags, about, RSS, 404
+src/pages/            home, post pages, archive, tags, about, RSS, 404,
+                      /posts/<id>.md (each post's Markdown) and /llms.txt
 src/layouts/          page shell (header, footer, <head>)
-src/styles/global.css all styles; colors are the :root tokens at the top
+src/styles/global.css all styles, inlined into every page; colors and font stacks are the :root tokens at the top
 src/consts.ts         site name, description, email, GitHub, archived tag, display time zone
-astro.config.mjs      site URL, Markdown (KaTeX, code highlighting), redirects for old URLs
+src/lib/              citation links, MathML tooltips, figures
+astro.config.mjs      site URL, Markdown (math, code highlighting), redirects for old URLs
 ```
+
+## Page weight
+
+Every page is one HTML file with its CSS inline, and nothing else: no web fonts (system Charter-style serif for English, the system Song face for Chinese), no JavaScript, no math fonts. A text-only post is about 5–8 KB over the wire; images are the only extra requests. Keep it that way: prefer system features (MathML, `<figure>`, `loading="lazy"`) over libraries, and check `dist/` sizes after changes.
 
 ## Migrated from Hexo
 

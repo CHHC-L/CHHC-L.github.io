@@ -22,14 +22,3 @@ const posts = (await getPosts()).filter((post) => !isArchived(post));
     }
   </div>
 </Base>
-
-<style>
-  .timeline {
-    margin-top: 2.5rem;
-  }
-
-  .empty {
-    margin-top: 0;
-    color: var(--muted);
-  }
-</style>

@@ -30,11 +30,11 @@ Since then, the explicit classification seems not to have moved. As far as we co
 4. **Waste rates.** For the linear cases with $k \le 14$, the long-run waste per item (liminf and limsup) is bracketed rigorously, e.g. $U\{9,13\}$: $[0.01087, 0.01123]$ (simulation: $0.01109$), about 0.22% more bins than optimal.
 5. **Where the waste goes.** In 26 linear cases, bins with two or more free units provably stay $O(1)$: all linear waste sits in bins with exactly one unit free.
 
-[![Classification of Best Fit under U{j,k} for k ≤ 25](/images/bestfit-ujk/classification.png)](/images/bestfit-ujk/classification.png)
+[![Classification of Best Fit under U{j,k} for k ≤ 25](/images/bestfit-ujk/classification.webp)](/images/bestfit-ujk/classification.webp)
 
 **An empirical $\sqrt{k}$ law (simulation, not proof).** For each $j$, we bisected on $k$ in simulation to find the largest $k$ with linear waste. For $j$ up to 40 the boundary fits $j^* \approx 2.52\sqrt{k}$ (residual $< 0.25$), and it agrees exactly with the certified rows $j \le 12$. The proven bounded region, $k \ge j(j+3)/2$, corresponds to $j \lesssim 1.41\sqrt{k}$. The theorem has the right order but is off by a factor of about 3 in $k$.
 
-[![The linear-waste region](/images/bestfit-ujk/boundary.png)](/images/bestfit-ujk/boundary.png)
+[![The linear-waste region](/images/bestfit-ujk/boundary.webp)](/images/bestfit-ujk/boundary.webp)
 
 ## Methods
 

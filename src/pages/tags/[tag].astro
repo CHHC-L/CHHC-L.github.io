@@ -22,14 +22,8 @@ const { posts } = Astro.props;
 
 <Base title={`#${tag}`}>
   <div class="lede">
-    <h1>#{tag}</h1>
+    <h1 class="tag-name">#{tag}</h1>
     <p>{postCount(posts.length)}. <a href="/tags/">All tags</a></p>
   </div>
   <YearIndex posts={posts} />
 </Base>
-
-<style>
-  h1 {
-    text-autospace: no-autospace;
-  }
-</style>

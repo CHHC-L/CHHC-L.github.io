@@ -13,9 +13,3 @@ const posts = (await getPosts()).filter(isArchived);
   </div>
   {posts.length > 0 ? <YearIndex posts={posts} /> : <p class="empty column">Nothing archived yet.</p>}
 </Base>
-
-<style>
-  .empty {
-    color: var(--muted);
-  }
-</style>

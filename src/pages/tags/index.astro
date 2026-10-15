@@ -21,7 +21,7 @@ const tags = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 
         tags.map(([tag, count]) => (
           <li>
             <span class="count">{postCount(count)}</span>
-            <a class="title" href={tagUrl(tag)}>
+            <a class="title tag-name" href={tagUrl(tag)}>
               #{tag}
             </a>
           </li>
@@ -30,16 +30,3 @@ const tags = [...counts].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 
     </ul>
   </div>
 </Base>
-
-<style>
-  .title {
-    text-autospace: no-autospace;
-  }
-
-  .count {
-    color: var(--muted);
-    font-size: 0.9rem;
-    font-variant-numeric: tabular-nums;
-    padding-top: 0.12rem;
-  }
-</style>
