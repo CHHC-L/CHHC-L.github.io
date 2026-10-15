@@ -42,7 +42,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #292a35;
-    --ink: #dde1f1;
+    --ink: #f6f6f4; /* VS Code Dracula Soft editor.foreground */
     --muted: #9095b8;
     --rule: #41434f;
     --code-bg: #20212a;
