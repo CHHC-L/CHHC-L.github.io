@@ -85,11 +85,7 @@ const edited = updated && formatDate(updated);
         document.addEventListener('click', (e) => {
           const math = e.target.closest?.('.katex');
           const tex = math?.querySelector('annotation')?.textContent;
-          if (!tex) return;
-          navigator.clipboard.writeText(tex.trim()).then(() => {
-            math.classList.add('copied');
-            setTimeout(() => math.classList.remove('copied'), 1200);
-          });
+          if (tex) navigator.clipboard.writeText(tex.trim());
         });
       </script>
     )
