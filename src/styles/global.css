@@ -533,10 +533,6 @@ main {
   padding: 0.25em 0;
 }
 
-.prose .katex[title] {
-  cursor: help;
-}
-
 /* Shiki emits both themes; show the one that matches the scheme. */
 @media (prefers-color-scheme: dark) {
   .astro-code,
