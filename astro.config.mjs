@@ -4,6 +4,7 @@ import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
+import remarkCitations from './src/lib/remark-citations.mjs';
 
 export default defineConfig({
   site: 'https://chhc-l.github.io',
@@ -11,7 +12,7 @@ export default defineConfig({
   markdown: {
     // unified (remark/rehype) instead of the default Sätteri, for $math$ via KaTeX.
     processor: unified({
-      remarkPlugins: [remarkMath],
+      remarkPlugins: [remarkMath, remarkCitations],
       rehypePlugins: [rehypeKatex],
     }),
     shikiConfig: {

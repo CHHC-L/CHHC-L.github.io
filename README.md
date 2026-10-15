@@ -28,7 +28,21 @@ $$
 $$
 ```
 
-Put images in `public/images/` and reference them as `![alt text](/images/name.png)`.
+Put images in `public/images/` and reference them as `![alt text](/images/name.png)`. An image on its own line is a figure: it spans the year gutter on wide screens, and wrapping it in a link to itself (`[![alt](/images/x.png)](/images/x.png)`) lets readers open the full-size file.
+
+### Citations
+
+End the post with a `## References` heading followed by a numbered list. Any `[1]` or `[2, 5]` in the text then links to the matching entry:
+
+```markdown
+Hajek's drift theorem [6] gives ...
+
+## References
+
+1. A. Author. Title. *Venue* 12(3):45–67, 2020. [doi:10.xxxx/yyyy](https://doi.org/10.xxxx/yyyy)
+```
+
+Reference entries follow that shape: authors, title, italic venue with volume(issue):pages, year, then a DOI or URL link when there is one.
 
 ### Archiving
 

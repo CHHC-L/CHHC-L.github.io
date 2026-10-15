@@ -1,4 +1,14 @@
-/* Apostrophes in English text come from a Latin face; CJK fonts draw them full-width. */
+/*
+ * CJK fonts draw quotes, dashes, × and · full-width. English text takes them
+ * from a Latin face; Chinese text ([lang|='zh']) keeps the full-width forms
+ * and only borrows the apostrophe.
+ */
+@font-face {
+  font-family: 'Latin Punct';
+  src: local('Georgia'), local('Times New Roman'), local('Noto Serif'), local('DejaVu Serif');
+  unicode-range: U+00B7, U+00D7, U+2013-2014, U+2018-2019, U+201C-201D, U+2026;
+}
+
 @font-face {
   font-family: 'Latin Quotes';
   src: local('Georgia'), local('Times New Roman'), local('Noto Serif'), local('DejaVu Serif');
@@ -17,7 +27,9 @@
   --code-bg: #e7ebf5;
   --selection: #f3c9d1;
 
-  --serif: 'Latin Quotes', 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --cjk-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
+  --serif: 'Latin Punct', var(--cjk-serif);
+  --serif-zh: 'Latin Quotes', var(--cjk-serif);
   --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 
   --measure: 40rem;
@@ -62,6 +74,10 @@ body {
   text-autospace: normal;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+}
+
+[lang|='zh'] {
+  font-family: var(--serif-zh);
 }
 
 ::selection {
@@ -443,6 +459,26 @@ main {
   height: auto;
   display: block;
   margin: 0 auto;
+  border-radius: 4px;
+}
+
+/* A figure is a paragraph holding just an image, optionally linked to the full-size file. */
+.prose p:has(> img:only-child),
+.prose p:has(> a:only-child > img:only-child) {
+  margin: 2em 0;
+}
+
+.prose p > a:only-child:has(> img:only-child) {
+  display: block;
+  cursor: zoom-in;
+}
+
+/* On wide screens figures also take the year gutter. */
+@media (min-width: 52rem) {
+  .post .prose p:has(> img:only-child),
+  .post .prose p:has(> a:only-child > img:only-child) {
+    margin-left: calc(-1 * var(--year-col));
+  }
 }
 
 .prose table {
@@ -450,13 +486,38 @@ main {
   display: block;
   overflow-x: auto;
   font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .prose th,
 .prose td {
   border-bottom: 1px solid var(--rule);
   padding: 0.4em 0.8em;
+}
+
+/* Left by default; GFM column alignment (align="right") still applies. */
+.prose th:not([align]),
+.prose td:not([align]) {
   text-align: left;
+}
+
+.prose th {
+  font-weight: 700;
+  border-bottom-color: var(--muted);
+}
+
+/* References list and the [n] citations that jump to it. */
+.prose #references + ol {
+  font-size: 0.92rem;
+}
+
+.prose li[id^='ref-'] {
+  scroll-margin-top: 1.5rem;
+  border-radius: 3px;
+}
+
+.prose li[id^='ref-']:target {
+  background: var(--code-bg);
 }
 
 .prose code {
@@ -483,6 +544,11 @@ main {
   color: var(--ink);
 }
 
+/* KaTeX defaults to 1.21em, which towers over this serif. */
+.prose .katex {
+  font-size: 1.1em;
+}
+
 .prose .katex-display {
   overflow-x: auto;
   overflow-y: hidden;
@@ -496,6 +562,11 @@ main {
     color: var(--shiki-dark) !important;
     font-style: var(--shiki-dark-font-style) !important;
     font-weight: var(--shiki-dark-font-weight) !important;
+  }
+
+  /* White-background figures glare less on a dark page. */
+  .prose img {
+    filter: brightness(0.88);
   }
 }
 
