@@ -425,7 +425,6 @@ main {
   margin-right: 0;
   padding: 0.1em 0 0.1em 1.1em;
   border-left: 3px solid var(--accent);
-  color: var(--muted);
 }
 
 .prose blockquote > :last-child {
@@ -508,10 +507,6 @@ main {
   border-radius: 4px;
   overflow-x: auto;
   background: var(--code-bg) !important;
-}
-
-.prose blockquote pre {
-  color: var(--ink);
 }
 
 /* KaTeX defaults to 1.21em, which towers over this serif. */
