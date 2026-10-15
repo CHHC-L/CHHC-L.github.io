@@ -39,10 +39,12 @@ Hajek's drift theorem [6] gives ...
 
 ## References
 
-1. A. Author. Title. *Venue* 12(3):45–67, 2020. [doi:10.xxxx/yyyy](https://doi.org/10.xxxx/yyyy)
+1. A. Author. Title. *Venue* 12(3):45–67, 2020.
 ```
 
-Reference entries follow that shape: authors, title, italic venue with volume(issue):pages, year, then a DOI or URL link when there is one.
+Reference entries follow that shape: authors, title, italic venue with volume(issue):pages, year. No DOIs; add a link only for things without a venue, such as code or a talk.
+
+When publishing, also unify punctuation in the source: plain ASCII quotes and apostrophes (they are curled at build time), en dashes for ranges and paired names (Dantzig–Wolfe, 154–167), "and" rather than "&" in prose, and math in `$...$` rather than Unicode symbols.
 
 ### Archiving
 

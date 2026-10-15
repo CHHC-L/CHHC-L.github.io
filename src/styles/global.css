@@ -186,37 +186,15 @@ main {
   gap: 1rem;
 }
 
-/* Reading pages: text in the measure column, the year hanging in the gutter. */
+/* Index pages: content lines up with the post list, past the year gutter. */
 .column {
   max-width: var(--measure);
   margin-left: var(--year-col);
 }
 
-.post {
-  display: grid;
-  grid-template-columns: var(--year-col) minmax(0, var(--measure));
-}
-
-.post-year {
-  font-size: 2.6rem;
-  font-weight: 900;
-  line-height: 1;
-  color: var(--accent);
-  letter-spacing: -0.02em;
-  padding-top: 1.9rem; /* lines up with the title's first line */
-}
-
 @media (max-width: 52rem) {
   .column {
     margin-left: 0;
-  }
-
-  .post {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .post-year {
-    display: none;
   }
 }
 
@@ -471,14 +449,6 @@ main {
 .prose p > a:only-child:has(> img:only-child) {
   display: block;
   cursor: zoom-in;
-}
-
-/* On wide screens figures also take the year gutter. */
-@media (min-width: 52rem) {
-  .post .prose p:has(> img:only-child),
-  .post .prose p:has(> a:only-child > img:only-child) {
-    margin-left: calc(-1 * var(--year-col));
-  }
 }
 
 .prose table {

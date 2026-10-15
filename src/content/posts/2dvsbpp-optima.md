@@ -11,7 +11,7 @@ Pack $n$ rectangles ($n = 20$ to $100$, no rotation) into bins. There are up to 
 
 Two different objectives:
 
-- **W:** cost = the cost column in the file. This is Pisinger & Sigurd's problem.
+- **W:** cost = the cost column in the file. This is Pisinger and Sigurd's problem.
 - **U:** cost = bin area. The heuristic papers and the packingsolver best-known-solution file [4] use this one.
 
 In 2005, Pisinger and Sigurd published 500 instances of this problem (the "MB" set, for both objectives), together with a branch-and-price algorithm that proved 164 of them optimal [1]. The 2021 survey of exact methods [2] still lists the rest (of objective W) as open.
@@ -29,7 +29,7 @@ Recently, Baldacci, Wang, Wei, Liu, Furini and Xu presented an exact algorithm f
 | $n = 100$ | 8 / 100 | 7 / 100 |
 | **Total** | **237** | **190** |
 
-**W.** All 100 instances with 20 items are closed, including the 29 the survey lists as open. At $n = 40$ we close 83. The survey lists 62 of the 100 as open, so at least 45 of those 62 are among them. At $n \ge 60$ we close 54, about as many as Pisinger & Sigurd did (about 55).
+**W.** All 100 instances with 20 items are closed, including the 29 the survey lists as open. At $n = 40$ we close 83. The survey lists 62 of the 100 as open, so at least 45 of those 62 are among them. At $n \ge 60$ we close 54, about as many as Pisinger and Sigurd did (about 55).
 
 **U.** The best-known table (packingsolver, 2025) [4] uses the lower bounds of Wei et al. (2013) [3] and closes 83 instances. We close 190, 143 of them not closed in that table. Our packings are cheaper than the best known on 13 instances:
 
@@ -82,9 +82,9 @@ Most of the code was written by Claude Opus 5.5.
 
 ## References
 
-1. D. Pisinger, M. Sigurd. The two-dimensional bin packing problem with variable bin sizes and costs. *Discrete Optimization* 2(2):154–167, 2005. [doi:10.1016/j.disopt.2005.01.002](https://doi.org/10.1016/j.disopt.2005.01.002)
-2. M. Iori, V. L. de Lima, S. Martello, F. K. Miyazawa, M. Monaci. Exact solution techniques for two-dimensional cutting and packing. *EJOR* 289(2):399–415, 2021. [doi:10.1016/j.ejor.2020.06.050](https://doi.org/10.1016/j.ejor.2020.06.050)
-3. L. Wei, W.-C. Oon, W. Zhu, A. Lim. A goal-driven approach to the 2D bin packing and variable-sized bin packing problems. *EJOR* 224(1):110–121, 2013. [doi:10.1016/j.ejor.2012.08.005](https://doi.org/10.1016/j.ejor.2012.08.005)
+1. D. Pisinger, M. Sigurd. The two-dimensional bin packing problem with variable bin sizes and costs. *Discrete Optimization* 2(2):154–167, 2005.
+2. M. Iori, V. L. de Lima, S. Martello, F. K. Miyazawa, M. Monaci. Exact solution techniques for two-dimensional cutting and packing. *EJOR* 289(2):399–415, 2021.
+3. L. Wei, W.-C. Oon, W. Zhu, A. Lim. A goal-driven approach to the 2D bin packing and variable-sized bin packing problems. *EJOR* 224(1):110–121, 2013.
 4. F. Fontan. packingsolver. [github.com/fontanf/packingsolver](https://github.com/fontanf/packingsolver) (best-known values in `data/rectangle/data_variable_sized_bin_packing_oriented_pisinger2005.csv`).
 5. R. Baldacci, S. Wang, L. Wei, Q. Liu, F. Furini, Z. Xu. A unified exact algorithm for multiple variants of heterogeneous 2D bin packing. *IFORS 2026*, [talk 572](https://www.euro-online.org/conf/ifors2026/treat_abstract?frompage=search&paperid=572).
 6. S. Wang, R. Baldacci, F. Furini, L. Wei, Z. Xu. High-dimensional heterogeneous bin packing: tightened formulations, numerically safe lower bounds, and an efficient exact algorithm. Working paper, not yet public.
