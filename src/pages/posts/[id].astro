@@ -35,6 +35,7 @@ interface Props {
 const { post, newer, older } = Astro.props;
 const { Content } = await render(post);
 const { title, date, updated } = post.data;
+const hasMath = /\$[^$\n]+\$|\$\$/.test(post.body ?? '');
 const published = formatDate(date);
 const edited = updated && formatDate(updated);
 ---
@@ -78,4 +79,19 @@ const edited = updated && formatDate(updated);
       )
     }
   </article>
+  {
+    hasMath && (
+      <script is:inline>
+        document.addEventListener('click', (e) => {
+          const math = e.target.closest?.('.katex');
+          const tex = math?.querySelector('annotation')?.textContent;
+          if (!tex) return;
+          navigator.clipboard.writeText(tex.trim()).then(() => {
+            math.classList.add('copied');
+            setTimeout(() => math.classList.remove('copied'), 1200);
+          });
+        });
+      </script>
+    )
+  }
 </Base>

@@ -30,7 +30,7 @@ $$
 
 Put images in `public/images/<post-id>/` as WebP (lossless for charts: `cwebp -lossless` or sharp) and reference them as `![alt text](/images/<post-id>/name.webp)`. An image on its own line becomes a `<figure>` with its width and height filled in and lazy loading; wrapping it in a link to itself (`[![alt](/images/x.webp)](/images/x.webp)`) lets readers open the full-size file.
 
-Math renders as native MathML (no KaTeX CSS or fonts); hovering a formula shows its TeX source.
+Math renders as native MathML (no KaTeX CSS or fonts); clicking a formula copies its TeX source.
 
 ### Citations
 
@@ -88,13 +88,13 @@ src/pages/            home, post pages, archive, tags, about, RSS, 404,
 src/layouts/          page shell (header, footer, <head>)
 src/styles/global.css all styles, inlined into every page; colors and font stacks are the :root tokens at the top
 src/consts.ts         site name, description, email, GitHub, archived tag, display time zone
-src/lib/              citation links, MathML tooltips, figures
+src/lib/              citation links, figures
 astro.config.mjs      site URL, Markdown (math, code highlighting), redirects for old URLs
 ```
 
 ## Page weight
 
-Every page is one HTML file with its CSS inline, and nothing else: no web fonts (system Charter-style serif for English, the system Song face for Chinese), no JavaScript, no math fonts. A text-only post is about 5–8 KB over the wire; images are the only extra requests. Keep it that way: prefer system features (MathML, `<figure>`, `loading="lazy"`) over libraries, and check `dist/` sizes after changes.
+Every page is one HTML file with its CSS inline, and nothing else: no web fonts (system Charter-style serif for English, the system Song face for Chinese), no math fonts, and no JavaScript except a few hundred bytes of inline click-to-copy on posts with math. A text-only post is about 5–8 KB over the wire; images are the only extra requests. Keep it that way: prefer system features (MathML, `<figure>`, `loading="lazy"`) over libraries, and check `dist/` sizes after changes.
 
 ## Migrated from Hexo
 

@@ -533,6 +533,27 @@ main {
   padding: 0.25em 0;
 }
 
+/* Clicking a formula copies its TeX (script in src/pages/posts/[id].astro). */
+.prose .katex {
+  cursor: pointer;
+  position: relative;
+}
+
+.prose .katex.copied::after {
+  content: 'Copied';
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  transform: translateX(-50%);
+  padding: 0.05em 0.45em;
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--bg);
+  font: 0.75rem/1.6 var(--serif);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 /* Shiki emits both themes; show the one that matches the scheme. */
 @media (prefers-color-scheme: dark) {
   .astro-code,

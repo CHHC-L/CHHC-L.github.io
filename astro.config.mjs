@@ -6,7 +6,6 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkCitations from './src/lib/remark-citations.mjs';
 import rehypeFigures from './src/lib/rehype-figures.mjs';
-import rehypeMathTitle from './src/lib/rehype-math-title.mjs';
 
 export default defineConfig({
   site: 'https://chhc-l.github.io',
@@ -18,7 +17,7 @@ export default defineConfig({
     // KaTeX emits MathML only: browsers draw it natively, no KaTeX CSS or fonts.
     processor: unified({
       remarkPlugins: [remarkMath, remarkCitations],
-      rehypePlugins: [[rehypeKatex, { output: 'mathml' }], rehypeMathTitle, rehypeFigures],
+      rehypePlugins: [[rehypeKatex, { output: 'mathml' }], rehypeFigures],
     }),
     shikiConfig: {
       themes: { light: 'github-light', dark: 'tokyo-night' },
