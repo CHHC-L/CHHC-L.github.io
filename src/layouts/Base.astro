@@ -3,6 +3,7 @@ import '@fontsource/noto-serif-sc/400.css';
 import '@fontsource/noto-serif-sc/700.css';
 import '@fontsource/noto-serif-sc/900.css';
 import '../styles/global.css';
+import { Font } from 'astro:assets';
 import { AUTHOR, EMAIL, GITHUB, SINCE, SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 
 interface Props {
@@ -26,6 +27,7 @@ const nav = [
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <Font cssVariable="--font-serif-latin" preload />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="author" content={AUTHOR} />

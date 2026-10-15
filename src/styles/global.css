@@ -28,7 +28,8 @@
   --selection: #f3c9d1;
 
   --cjk-serif: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', serif;
-  --serif: 'Latin Punct', var(--cjk-serif);
+  /* --font-serif-latin comes from the Fonts API (astro.config.mjs) and ends in the CJK fonts. */
+  --serif: 'Latin Punct', var(--font-serif-latin);
   --serif-zh: 'Latin Quotes', var(--cjk-serif);
   --mono: ui-monospace, 'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace;
 
