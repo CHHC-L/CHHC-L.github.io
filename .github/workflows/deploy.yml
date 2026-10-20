@@ -19,6 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+      # The COC7 character sheet app, served at /coc7-xlsx-web/. Its repo commits the built
+      # single-file app, so take that file as is.
+      - name: Add coc7-xlsx-web
+        run: |
+          git clone --depth 1 https://github.com/CHHC-L/coc7-xlsx-web.git "$RUNNER_TEMP/coc7-xlsx-web"
+          mkdir -p public/coc7-xlsx-web
+          cp "$RUNNER_TEMP/coc7-xlsx-web/dist/COC7车卡.html" public/coc7-xlsx-web/index.html
       - uses: withastro/action@v6
 
   deploy:

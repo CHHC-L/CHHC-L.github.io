@@ -79,6 +79,12 @@ Pushing to `main` runs `.github/workflows/deploy.yml`; the site updates a minute
 
 The repo's **Settings → Pages → Source** must be **GitHub Actions**.
 
+## Other apps on this domain
+
+`/coc7-xlsx-web/` is the COC7 character sheet from [CHHC-L/coc7-xlsx-web](https://github.com/CHHC-L/coc7-xlsx-web). That repo commits its built single-file app, `dist/COC7车卡.html`; the deploy workflow clones the repo and copies that file to `public/coc7-xlsx-web/index.html` (ignored here) before the build, and `astro.config.mjs` adds the page to the sitemap. Nothing in that repo is built or changed here, and the page-weight rules below don't apply to it.
+
+The app only updates when this site deploys. After pushing a new version there, run `gh workflow run deploy.yml -R CHHC-L/CHHC-L.github.io` (any push to `main` here does it too).
+
 ## Layout
 
 ```

@@ -1,5 +1,7 @@
 # build output
 dist/
+# copied in by the deploy workflow
+public/coc7-xlsx-web/
 # generated types
 .astro/
 

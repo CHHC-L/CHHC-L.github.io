@@ -9,7 +9,10 @@ import rehypeFigures from './src/lib/rehype-figures.mjs';
 
 export default defineConfig({
   site: 'https://chhc-l.github.io',
-  integrations: [sitemap()],
+  integrations: [
+    // /coc7-xlsx-web/ isn't an Astro page (the deploy workflow copies it into public/), so list it by hand.
+    sitemap({ customPages: ['https://chhc-l.github.io/coc7-xlsx-web/'] }),
+  ],
   // The stylesheet is a few KB: ship it inside each page instead of as a separate request.
   build: { inlineStylesheets: 'always' },
   markdown: {
