@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import remarkCitations from './src/lib/remark-citations.mjs';
+import remarkMathQuotes from './src/lib/remark-math-quotes.mjs';
 import rehypeFigures from './src/lib/rehype-figures.mjs';
 
 export default defineConfig({
@@ -19,7 +20,7 @@ export default defineConfig({
     // unified (remark/rehype) instead of the default Sätteri, for $math$ via KaTeX.
     // KaTeX emits MathML only: browsers draw it natively, no KaTeX CSS or fonts.
     processor: unified({
-      remarkPlugins: [remarkMath, remarkCitations],
+      remarkPlugins: [remarkMath, remarkMathQuotes, remarkCitations],
       rehypePlugins: [[rehypeKatex, { output: 'mathml' }], rehypeFigures],
     }),
     shikiConfig: {
