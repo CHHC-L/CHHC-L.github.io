@@ -26,7 +26,7 @@ jobs:
           git clone --depth 1 https://github.com/CHHC-L/coc7-xlsx-web.git "$RUNNER_TEMP/coc7-xlsx-web"
           mkdir -p public/coc7-xlsx-web
           cp "$RUNNER_TEMP/coc7-xlsx-web/dist/COC7车卡.html" public/coc7-xlsx-web/index.html
-      # 经上记着说 (Bible-verse matcher), served at /biblike/. Its repo commits the whole static
+      # 引经 (Bible-verse matcher), served at /biblike/. Its repo commits the whole static
       # site, models included, in docs/; copy that directory as is.
       - name: Add biblike
         run: |
