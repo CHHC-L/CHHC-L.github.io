@@ -2,6 +2,7 @@
 dist/
 # copied in by the deploy workflow
 public/coc7-xlsx-web/
+public/biblike/
 # generated types
 .astro/
 
