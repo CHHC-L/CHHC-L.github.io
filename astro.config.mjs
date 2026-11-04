@@ -13,7 +13,11 @@ export default defineConfig({
   integrations: [
     // These apps aren't Astro pages (the deploy workflow copies them into public/), so list them by hand.
     sitemap({
-      customPages: ['https://chhc-l.github.io/coc7-xlsx-web/', 'https://chhc-l.github.io/biblike/'],
+      customPages: [
+        'https://chhc-l.github.io/coc7-xlsx-web/',
+        'https://chhc-l.github.io/biblike/',
+        'https://chhc-l.github.io/mai-b50-planner/',
+      ],
     }),
   ],
   // The stylesheet is a few KB: ship it inside each page instead of as a separate request.

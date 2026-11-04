@@ -85,7 +85,9 @@ The repo's **Settings → Pages → Source** must be **GitHub Actions**.
 
 `/biblike/` is 引经, a Bible-verse matcher from [CHHC-L/biblike](https://github.com/CHHC-L/biblike). That repo commits the whole static site in `docs/` (about 87 MB, including two ONNX models; no Git LFS, which Pages can't serve). The workflow copies `docs/` to `public/biblike/` (ignored here) as is, and `astro.config.mjs` lists the page in the sitemap. The repo itself has Pages turned off, so it doesn't claim the same `/biblike/` path. As with the character sheet, nothing there is built here and the page-weight rules don't apply.
 
-These apps only update when this site deploys. After pushing a new version to one of those repos, run `gh workflow run deploy.yml -R CHHC-L/CHHC-L.github.io` (any push to `main` here does it too).
+`/mai-b50-planner/` is the maimai DX B50 rating planner from [CHHC-L/mai-b50-planner](https://github.com/CHHC-L/mai-b50-planner). That repo commits the static page in `web/`, and its own workflow rebuilds the chart data in `web/data/` every day at 03:37 China time, committing when a chart changed. The workflow here copies `web/` to `public/mai-b50-planner/` (ignored here) as is, and the page is in the sitemap. Pages is off on that repo too.
+
+These apps only update when this site deploys. After pushing a new version to one of those repos, run `gh workflow run deploy.yml -R CHHC-L/CHHC-L.github.io` (any push to `main` here does it too). To pick up the planner's data updates, the workflow also runs every day at 05:07 China time; that scheduled run skips the IndexNow job. GitHub turns off scheduled workflows after 60 days without activity in this repository; re-enable it from the Actions tab if that happens.
 
 ## Layout
 

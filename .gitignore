@@ -3,6 +3,7 @@ dist/
 # copied in by the deploy workflow
 public/coc7-xlsx-web/
 public/biblike/
+public/mai-b50-planner/
 # generated types
 .astro/
 

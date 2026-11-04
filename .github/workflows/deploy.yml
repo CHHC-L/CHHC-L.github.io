@@ -4,6 +4,10 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Daily, after mai-b50-planner rebuilds its chart data (03:37 China time), so that page picks up the new data.
+  # Scheduled runs often start late, hence the margin.
+  schedule:
+    - cron: "7 21 * * *"  # 05:07 China time
 
 permissions:
   contents: read
@@ -32,6 +36,12 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/CHHC-L/biblike.git "$RUNNER_TEMP/biblike"
           cp -R "$RUNNER_TEMP/biblike/docs" public/biblike
+      # The maimai DX B50 planner, served at /mai-b50-planner/. Its repo commits the static page in web/
+      # and rebuilds web/data/ every day; copy that directory as is.
+      - name: Add mai-b50-planner
+        run: |
+          git clone --depth 1 https://github.com/CHHC-L/mai-b50-planner.git "$RUNNER_TEMP/mai-b50-planner"
+          cp -R "$RUNNER_TEMP/mai-b50-planner/web" public/mai-b50-planner
       - uses: withastro/action@v6
 
   deploy:
@@ -45,9 +55,11 @@ jobs:
         uses: actions/deploy-pages@v5
 
   # Tell Bing and the other IndexNow engines (indexnow.org) what's on the site.
-  # The key is public by design; its file is public/<key>.txt.
+  # The key is public by design; its file is public/<key>.txt. The daily scheduled run only refreshes app data,
+  # so it doesn't resubmit the same URLs.
   indexnow:
     needs: deploy
+    if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
     continue-on-error: true
     env:
